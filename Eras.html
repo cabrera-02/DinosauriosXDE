@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las Eras de los Dinosaurios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #52345e 0%, #52345e 100%);
+            color: #ecf0f1;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #f39c12;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px #f39c12; }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 30px #f39c12, 0 0 40px #f39c12; }
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #e74c3c, #f39c12, #27ae60);
+            border-radius: 2px;
+        }
+
+        .era {
+            margin: 60px 0;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .era:nth-child(1) { animation-delay: 0.2s; }
+        .era:nth-child(2) { animation-delay: 0.4s; }
+        .era:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .era-content {
+            width: 45%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .era-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .era:nth-child(odd) .era-content {
+            margin-left: 0;
+        }
+
+        .era:nth-child(even) .era-content {
+            margin-left: 55%;
+        }
+
+        .era-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #f39c12;
+            border: 4px solid #ecf0f1;
+            z-index: 10;
+            top: 30px;
+        }
+
+        .era-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #f39c12;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .era-period {
+            font-size: 1.2em;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .era-description {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+
+        .dinosaur-list {
+            margin-top: 20px;
+        }
+
+        .dinosaur-list h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .dinosaur-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+            transition: all 0.3s ease;
+        }
+
+        .dinosaur-item:hover {
+            background: rgba(0, 0, 0, 0.4);
+            transform: translateX(10px);
+        }
+
+        .dinosaur-name {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .characteristics {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .characteristics h4 {
+            color: #e67e22;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .char-item {
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .char-item:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-text {
+            color: #bdc3c7;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .era-content {
+                width: calc(100% - 80px);
+                margin-left: 60px !important;
+            }
+
+            .era-marker {
+                left: 30px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .era-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦕 Las Eras de los Dinosaurios 🦖</h1>
+            <p class="subtitle">Un viaje a través del tiempo mesozoico</p>
+        </header>
+        <nav>
+            <a href="Inicio.html" id="nav-inicio" class="nav-link active"> Inicio</a>
+            <a href="TipoDeDinosaurios.html" id="nav-tipos" class="nav-link"> Tipos</a>
+            <a href="Eras.html" id="nav-eras" class="nav-link"> Eras</a>
+            <a href="Descubrimientos.html" id="nav-descubrimientos" class="nav-link"> Descubrimientos</a>
+        </nav>
+        <div class="timeline">
+            <div class="era">
+                <div class="era-marker"></div>
+                <div class="era-content">
+                    <h2 class="era-title">Era Triásica</h2>
+                    <p class="era-period">252 - 201 millones de años atrás</p>
+                    <p class="era-description">
+                        La era Triásica marca el comienzo de la era de los dinosaurios. Durante este período, los primeros dinosaurios evolucionaron a partir de arcosaurios. El clima era cálido y seco, con un supercontinente llamado Pangea que comenzaba a fragmentarse.
+                    </p>
+                    
+                    <div class="dinosaur-list">
+                        <h4>🦴 Dinosaurios Representativos:</h4>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Eoraptor:</span> Uno de los dinosaurios más primitivos conocidos, pequeño y bípedo.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Herrerasaurus:</span> Carnívoro primitivo con características tanto de dinosaurios como de arcosaurios.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Plateosaurus:</span> Uno de los primeros dinosaurios herbívoros de gran tamaño.
+                        </div>
+                    </div>
+
+                    <div class="characteristics">
+                        <h4>🌍 Características del Período:</h4>
+                        <div class="char-item">• Clima cálido y árido global</div>
+                        <div class="char-item">• Pangea aún unida pero comenzando a fracturarse</div>
+                        <div class="char-item">• Primeros mamíferos primitivos</div>
+                        <div class="char-item">• Extinción masiva del Pérmico-Triásico</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="era">
+                <div class="era-marker"></div>
+                <div class="era-content">
+                    <h2 class="era-title">Era Jurásica</h2>
+                    <p class="era-period">201 - 145 millones de años atrás</p>
+                    <p class="era-description">
+                        El período Jurásico es considerado la "edad dorada" de los dinosaurios. Durante esta época, los dinosaurios se diversificaron enormemente y alcanzaron tamaños gigantescos. Los primeros dinosaurios voladores también aparecieron en este período.
+                    </p>
+                    
+                    <div class="dinosaur-list">
+                        <h4>🦴 Dinosaurios Representativos:</h4>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Brachiosaurus:</span> Gigantesco saurópodo con cuello extremadamente largo.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Allosaurus:</span> Gran depredador carnívoro del Jurásico tardío.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Stegosaurus:</span> Herbívoro distintivo con placas dorsales y púas en la cola.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Archaeopteryx:</span> Considerado el eslabón perdido entre dinosaurios y aves.
+                        </div>
+                    </div>
+
+                    <div class="characteristics">
+                        <h4>🌍 Características del Período:</h4>
+                        <div class="char-item">• Clima cálido y húmedo</div>
+                        <div class="char-item">• Pangea se divide en Laurasia y Gondwana</div>
+                        <div class="char-item">• Primeras aves primitivas</div>
+                        <div class="char-item">• Abundantes bosques de coníferas y helechos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="era">
+                <div class="era-marker"></div>
+                <div class="era-content">
+                    <h2 class="era-title">Era Cretácica</h2>
+                    <p class="era-period">145 - 66 millones de años atrás</p>
+                    <p class="era-description">
+                        El período Cretácico fue el último y más largo de la era mesozoica. Durante este tiempo, los dinosaurios alcanzaron su máxima diversidad, pero también enfrentaron su extinción masiva al final del período debido al impacto de un asteroide.
+                    </p>
+                    
+                    <div class="dinosaur-list">
+                        <h4>🦴 Dinosaurios Representativos:</h4>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Tyrannosaurus Rex:</span> El "rey de los dinosaurios", depredador apex del Cretácico tardío.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Triceratops:</span> Herbívoro con tres cuernos y un gran escudo craneal.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Velociraptor:</span> Pequeño pero feroz carnívoro con garras afiladas.
+                        </div>
+                        <div class="dinosaur-item">
+                            <span class="dinosaur-name">Spinosaurus:</span> Posiblemente el carnívoro más grande, adaptado para la vida acuática.
+                        </div>
+                    </div>
+
+                    <div class="characteristics">
+                        <h4>🌍 Características del Período:</h4>
+                        <div class="char-item">• Aparición de las primeras plantas con flores</div>
+                        <div class="char-item">• Niveles del mar muy altos</div>
+                        <div class="char-item">• Continentes similares a los actuales</div>
+                        <div class="char-item">• Extinción masiva Cretácico-Paleógeno (K-Pg)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p class="footer-text">
+                Los dinosaurios dominaron la Tierra durante más de 160 millones de años, 
+                dejando un legado fascinante que continúa cautivando a científicos y entusiastas por igual.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const eras = document.querySelectorAll('.era');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            eras.forEach(era => {
+                observer.observe(era);
+            });
+
+            const dinosaurItems = document.querySelectorAll('.dinosaur-item');
+            dinosaurItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.5)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Origen de los Dinosaurios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0e1a 25%, #2d1b2d 50%, #1a0e1a 75%, #0c0c0c 100%);
+            color: #f0f0f0;
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Efecto de estrellas de fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 50px 0;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 4.5em;
+            background: linear-gradient(45deg, #8a2be2, #da70d6, #ff69b4, #dda0dd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+            animation: headerGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes headerGlow {
+            from { filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.7)); }
+            to { filter: drop-shadow(0 0 40px rgba(218, 112, 214, 0.9)); }
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #dda0dd;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+
+        .intro-section {
+            background: rgba(138, 43, 226, 0.1);
+            padding: 50px;
+            border-radius: 25px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-text {
+            font-size: 1.3em;
+            text-align: center;
+            color: #f0f0f0;
+            line-height: 1.9;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 3.2em;
+            color: #da70d6;
+            text-align: center;
+            margin: 80px 0 50px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #da70d6, transparent);
+        }
+
+        .evolution-timeline {
+            position: relative;
+            margin: 60px 0;
+            padding: 40px 0;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 8px;
+            background: linear-gradient(90deg, #4a0e4e, #8a2be2, #da70d6, #ff69b4);
+            border-radius: 4px;
+            margin: 40px 0;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        }
+
+        .evolution-step {
+            position: absolute;
+            width: 300px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .evolution-step:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #da70d6;
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.4);
+        }
+
+        .evolution-step:nth-child(1) { top: -120px; left: 5%; }
+        .evolution-step:nth-child(2) { top: 50px; left: 25%; }
+        .evolution-step:nth-child(3) { top: -120px; left: 45%; }
+        .evolution-step:nth-child(4) { top: 50px; left: 65%; }
+
+        .step-period {
+            font-size: 1.8em;
+            color: #ff69b4;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step-title {
+            font-size: 1.4em;
+            color: #da70d6;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .step-description {
+            font-size: 1.1em;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: -8px;
+            width: 24px;
+            height: 24px;
+            background: #ff69b4;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .marker-1 { left: 15%; }
+        .marker-2 { left: 35%; }
+        .marker-3 { left: 55%; }
+        .marker-4 { left: 75%; }
+
+        .first-dinosaurs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .dinosaur-card {
+            background: rgba(138, 43, 226, 0.15);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .dinosaur-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .dinosaur-card:hover::before {
+            left: 100%;
+        }
+
+        .dinosaur-card:hover {
+            transform: translateY(-20px) rotateY(5deg);
+            border-color: #da70d6;
+            box-shadow: 0 30px 60px rgba(138, 43, 226, 0.3);
+        }
+
+        .dinosaur-name {
+            font-size: 2.2em;
+            color: #ff69b4;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .dinosaur-period {
+            font-size: 1.2em;
+            color: #dda0dd;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .dinosaur-description {
+            font-size: 1.15em;
+            color: #f0f0f0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .dinosaur-facts {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #da70d6;
+        }
+
+        .fact-title {
+            color: #ff69b4;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .fact-list {
+            list-style: none;
+        }
+
+        .fact-list li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .fact-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #da70d6;
+            font-weight: bold;
+        }
+
+        .extinction-event {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.3), rgba(255, 69, 0, 0.2));
+            padding: 50px;
+            border-radius: 25px;
+            margin: 80px 0;
+            border: 2px solid rgba(255, 69, 0, 0.4);
+            text-align: center;
+        }
+
+        .extinction-title {
+            font-size: 2.8em;
+            color: #ff4500;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .extinction-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .survival-section {
+            background: rgba(34, 139, 34, 0.2);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            border: 2px solid rgba(34, 139, 34, 0.4);
+        }
+
+        .survival-title {
+            font-size: 2.5em;
+            color: #32cd32;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .survival-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .survival-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(34, 139, 34, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .survival-item:hover {
+            background: rgba(34, 139, 34, 0.1);
+            border-color: #32cd32;
+            transform: translateY(-5px);
+        }
+
+        .survival-item h4 {
+            color: #32cd32;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 100px;
+            padding: 50px;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.2));
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .footer-text {
+            font-size: 1.3em;
+            color: #dda0dd;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .first-dinosaurs {
+                grid-template-columns: 1fr;
+            }
+
+            .evolution-step {
+                position: static;
+                width: 100%;
+                margin: 20px 0;
+            }
+
+            .timeline-track {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2.8em;
+            }
+
+            .section-title {
+                font-size: 2.5em;
+            }
+
+            .survival-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+            <a href="Inicio.html" id="nav-inicio" class="nav-link active"> Inicio</a>
+            <a href="TipoDeDinosaurios.html" id="nav-tipos" class="nav-link"> Tipos</a>
+            <a href="Eras.html" id="nav-eras" class="nav-link"> Eras</a>
+            <a href="Descubrimientos.html" id="nav-descubrimientos" class="nav-link"> Descubrimientos</a>
+        </nav>
+    <div class="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1>🌟 El Origen de los Dinosaurios 🦕</h1>
+            <p class="subtitle">El amanecer de los gigantes que dominaron la Tierra</p>
+        </header>
+
+        <section class="intro-section">
+            <p class="intro-text">
+                Hace aproximadamente 252 millones de años, después de la extinción masiva más devastadora de la historia de la Tierra, 
+                un nuevo grupo de reptiles comenzó a emerger y evolucionar. Estos eran los primeros dinosaurios, criaturas pequeñas y ágiles 
+                que eventualmente se convertirían en los animales terrestres más exitosos que jamás hayan existido.
+            </p>
+            <p class="intro-text">
+                La historia de los dinosaurios comienza en el período Triásico, una época de recuperación y experimentación evolutiva 
+                donde la vida terrestre se reorganizó después del "Gran Morir" del Pérmico-Triásico.
+            </p>
+        </section>
+
+        <h2 class="section-title">🧬 Evolución de los Arcosaurios</h2>
+
+        <div class="evolution-timeline">
+            <div class="timeline-track">
+                <div class="timeline-marker marker-1"></div>
+                <div class="timeline-marker marker-2"></div>
+                <div class="timeline-marker marker-3"></div>
+                <div class="timeline-marker marker-4"></div>
+            </div>
+
+            <div class="evolution-step">
+                <div class="step-period">260 Ma</div>
+                <h3 class="step-title">Primeros Arcosaurios</h3>
+                <p class="step-description">
+                    Los arcosaurios primitivos emergen como un grupo diverso de reptiles. 
+                    Estos ancestros comunes desarrollaron características clave como el cráneo diápsido 
+                    y aberturas temporales adicionales.
+                </p>
+            </div>
+
+            <div class="evolution-step">
+                <div class="step-period">245 Ma</div>
+                <h3 class="step-title">División Evolutiva</h3>
+                <p class="step-description">
+                    Los arcosaurios se dividen en dos linajes principales: 
+                    los pseudosuquios (que incluyen cocodrilos) y los ornitodiros 
+                    (que llevarían a dinosaurios y pterosaurios).
+                </p>
+            </div>
+
+            <div class="evolution-step">
+                <div class="step-period">235 Ma</div>
+                <h3 class="step-title">Dinosauromorfos</h3>
+                <p class="step-description">
+                    Aparecen los dinosauromorfos, un grupo que incluye a los dinosaurios 
+                    y sus parientes más cercanos. Desarrollan características como 
+                    patas más largas y postura semi-erecta.
+                </p>
+            </div>
+
+            <div class="evolution-step">
+                <div class="step-period">228 Ma</div>
+                <h3 class="step-title">Primeros Dinosaurios</h3>
+                <p class="step-description">
+                    Los verdaderos dinosaurios aparecen en el registro fósil. 
+                    Son pequeños, bípedos y desarrollan características únicas como 
+                    la cadera perforada y el tobillo de tipo "mesotarsal".
+                </p>
+            </div>
+        </div>
+
+        <h2 class="section-title">🦴 Los Primeros Dinosaurios</h2>
+
+        <div class="first-dinosaurs">
+            <div class="dinosaur-card">
+                <h3 class="dinosaur-name">Eoraptor</h3>
+                <p class="dinosaur-period">228 millones de años - Triásico Tardío</p>
+                <p class="dinosaur-description">
+                    Considerado uno de los dinosaurios más primitivos conocidos, Eoraptor era un pequeño omnívoro 
+                    que medía apenas 1 metro de longitud. Su nombre significa "ladrón del amanecer", 
+                    reflejando su posición como uno de los primeros dinosaurios.
+                </p>
+                <div class="dinosaur-facts">
+                    <div class="fact-title">Características Clave:</div>
+                    <ul class="fact-list">
+                        <li>Tamaño pequeño (1 metro de largo)</li>
+                        <li>Bípedo ágil con brazos largos</li>
+                        <li>Dientes tanto cortantes como trituradores</li>
+                        <li>Estructura de cadera primitiva</li>
+                        <li>Encontrado en Argentina</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dinosaur-card">
+                <h3 class="dinosaur-name">Herrerasaurus</h3>
+                <p class="dinosaur-period">231 millones de años - Triásico Tardío</p>
+                <p class="dinosaur-description">
+                    Un carnívoro primitivo que representa una rama temprana de la evolución de los dinosaurios. 
+                    Herrerasaurus muestra una mezcla de características primitivas y avanzadas, 
+                    lo que ha generado debate sobre su clasificación exacta.
+                </p>
+                <div class="dinosaur-facts">
+                    <div class="fact-title">Características Clave:</div>
+                    <ul class="fact-list">
+                        <li>Depredador de 3-6 metros de largo</li>
+                        <li>Mandíbulas poderosas con dientes afilados</li>
+                        <li>Garras curvadas para atrapar presas</li>
+                        <li>Estructura de cadera única</li>
+                        <li>Corredor veloz y ágil</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dinosaur-card">
+                <h3 class="dinosaur-name">Staurikosaurus</h3>
+                <p class="dinosaur-period">233 millones de años - Triásico Medio</p>
+                <p class="dinosaur-description">
+                    Uno de los dinosaurios más antiguos conocidos, Staurikosaurus era un pequeño terópodo 
+                    que vivió en lo que hoy es Brasil. Su descubrimiento ha sido crucial para entender 
+                    los orígenes de los dinosaurios.
+                </p>
+                <div class="dinosaur-facts">
+                    <div class="fact-title">Características Clave:</div>
+                    <ul class="fact-list">
+                        <li>Solo 2 metros de longitud</li>
+                        <li>Uno de los fósiles más antiguos</li>
+                        <li>Estructura corporal muy primitiva</li>
+                        <li>Bípedo obligado</li>
+                        <li>Descubierto en Brasil</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dinosaur-card">
+                <h3 class="dinosaur-name">Plateosaurus</h3>
+                <p class="dinosaur-period">214 millones de años - Triásico Tardío</p>
+                <p class="dinosaur-description">
+                    Uno de los primeros dinosaurios herbívoros de gran tamaño, Plateosaurus representa 
+                    la temprana diversificación de los dinosaurios hacia nichos ecológicos herbívoros. 
+                    Podía caminar tanto en dos como en cuatro patas.
+                </p>
+                <div class="dinosaur-facts">
+                    <div class="fact-title">Características Clave:</div>
+                    <ul class="fact-list">
+                        <li>Hasta 10 metros de longitud</li>
+                        <li>Cuello largo para alcanzar vegetación alta</li>
+                        <li>Dientes adaptados para plantas</li>
+                        <li>Locomotion bípeda y cuadrúpeda</li>
+                        <li>Abundante en Europa</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <section class="extinction-event">
+            <h2 class="extinction-title">💥 La Gran Extinción del Pérmico-Triásico</h2>
+            <p class="extinction-text">
+                Antes del surgimiento de los dinosaurios, la Tierra experimentó la extinción masiva más severa 
+                de su historia hace 252 millones de años. Conocida como "El Gran Morir", esta catástrofe eliminó 
+                aproximadamente el 96% de las especies marinas y el 70% de las especies terrestres.
+            </p>
+            <p class="extinction-text">
+                Esta extinción creó un vacío ecológico masivo que permitió a nuevos grupos, incluyendo los primeros 
+                dinosaurios, evolucionar y diversificarse rápidamente durante el período Triásico.
+            </p>
+        </section>
+
+        <section class="survival-section">
+            <h2 class="survival-title">🌱 Factores del Éxito Temprano</h2>
+            
+            <div class="survival-grid">
+                <div class="survival-item">
+                    <h4>🏃 Postura Erecta</h4>
+                    <p>Los dinosaurios desarrollaron patas que se extendían directamente debajo del cuerpo, permitiendo una locomoción más eficiente que sus contemporáneos.</p>
+                </div>
+
+                <div class="survival-item">
+                    <h4>🫁 Sistema Respiratorio</h4>
+                    <p>Desarrollaron un sistema respiratorio avanzado similar al de las aves modernas, permitiéndoles ser más activos que otros reptiles.</p>
+                </div>
+
+                <div class="survival-item">
+                    <h4>🦴 Huesos Huecos</h4>
+                    <p>Muchos dinosaurios tempranos tenían huesos parcialmente huecos, reduciendo su peso sin comprometer la fuerza estructural.</p>
+                </div>
+
+                <div class="survival-item">
+                    <h4>🔥 Metabolismo Activo</h4>
+                    <p>Evidencia sugiere que los primeros dinosaurios tenían un metabolismo más activo que otros reptiles de su época.</p>
+                </div>
+
+                <div class="survival-item">
+                    <h4>🎯 Especialización Temprana</h4>
+                    <p>Rápidamente se diversificaron en carnívoros y herbívoros, ocupando múltiples nichos ecológicos disponibles.</p>
+                </div>
+
+                <div class="survival-item">
+                    <h4>🥚 Cuidado Parental</h4>
+                    <p>Desarrollaron comportamientos de cuidado parental que aumentaron las tasas de supervivencia de las crías.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p class="footer-text">
+                El origen de los dinosaurios marca uno de los capítulos más fascinantes de la evolución. 
+                Desde sus humildes comienzos como pequeños reptiles en el Triásico, evolucionaron para convertirse 
+                en los animales terrestres más exitosos de la historia, dominando la Tierra durante más de 160 millones de años 
+                y dejando un legado que perdura hasta hoy en las aves modernas.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+
+            const cards = document.querySelectorAll('.dinosaur-card');
+            const evolutionSteps = document.querySelectorAll('.evolution-step');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) rotateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            [...cards, ...evolutionSteps].forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(50px)';
+                element.style.transition = `all 0.8s ease-out ${index * 0.1}s`;
+                observer.observe(element);
+            });
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const header = document.querySelector('header');
+                header.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
+
+            evolutionSteps.forEach(step => {
+                step.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                step.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubrimientos de Dinosaurios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e8f4f8;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 4em;
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #ffd23f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+            margin-bottom: 15px;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { filter: brightness(1) drop-shadow(0 0 10px rgba(255, 107, 53, 0.5)); }
+            to { filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 107, 53, 0.8)); }
+        }
+
+        .subtitle {
+            font-size: 1.4em;
+            color: #a8d8ea;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .intro-section {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            text-align: center;
+            color: #d4e6f1;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            color: #ff6b35;
+            text-align: center;
+            margin: 60px 0 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .discoveries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .discovery-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discovery-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .discovery-card:hover::before {
+            left: 100%;
+        }
+
+        .discovery-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.3);
+            border-color: rgba(255, 107, 53, 0.5);
+        }
+
+        .discovery-year {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffd23f;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .discovery-title {
+            font-size: 1.8em;
+            color: #ff6b35;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .discovery-location {
+            font-size: 1.1em;
+            color: #a8d8ea;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .discovery-description {
+            font-size: 1.1em;
+            color: #e8f4f8;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .discovery-scientist {
+            background: rgba(255, 107, 53, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b35;
+            margin-top: 20px;
+        }
+
+        .scientist-name {
+            font-weight: bold;
+            color: #ffd23f;
+            font-size: 1.2em;
+        }
+
+        .scientist-info {
+            color: #d4e6f1;
+            margin-top: 5px;
+        }
+
+        .timeline-section {
+            margin: 80px 0;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff6b35, #f7931e, #ffd23f);
+            border-radius: 3px;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .timeline-item {
+            margin: 50px 0;
+            position: relative;
+            opacity: 0;
+            animation: timelineFade 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+        .timeline-item:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes timelineFade {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ffd23f;
+            border: 5px solid #e8f4f8;
+            z-index: 10;
+            top: 25px;
+            box-shadow: 0 0 15px rgba(255, 210, 63, 0.7);
+        }
+
+        .modern-discoveries {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 25px;
+            margin: 60px 0;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .modern-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .modern-card:hover {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: #ff6b35;
+            transform: translateY(-5px);
+        }
+
+        .modern-title {
+            font-size: 1.4em;
+            color: #ffd23f;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modern-year {
+            color: #ff6b35;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .fun-facts {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(247, 147, 30, 0.2));
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            border: 2px solid rgba(255, 107, 53, 0.3);
+        }
+
+        .fact-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid #ffd23f;
+            transition: all 0.3s ease;
+        }
+
+        .fact-item:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: translateX(10px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+        }
+
+        @media (max-width: 768px) {
+            .discoveries-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 60px !important;
+            }
+
+            .timeline-marker {
+                left: 30px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .section-title {
+                font-size: 2.2em;
+            }
+
+            .modern-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="Inicio.html" id="nav-inicio" class="nav-link active"> Inicio</a>
+            <a href="TipoDeDinosaurios.html" id="nav-tipos" class="nav-link"> Tipos</a>
+            <a href="Eras.html" id="nav-eras" class="nav-link"> Eras</a>
+            <a href="Descubrimientos.html" id="nav-descubrimientos" class="nav-link"> Descubrimientos</a>
+        </nav>
+        <header>
+            <h1> Descubrimientos de Dinosaurios </h1>
+            <p class="subtitle">La fascinante historia de cómo descubrimos a los gigantes del pasado</p>
+        </header>
+
+        <section class="intro-section">
+            <p class="intro-text">
+                Los descubrimientos de dinosaurios han revolucionado nuestra comprensión de la historia de la Tierra. 
+                Desde los primeros fósiles encontrados en el siglo XIX hasta los increíbles hallazgos modernos con 
+                tecnología avanzada, cada descubrimiento nos acerca más a entender estos magnificos seres que una vez dominaron nuestro planeta.
+            </p>
+        </section>
+
+        <h2 class="section-title">🏛️ Descubrimientos Históricos</h2>
+
+        <div class="discoveries-grid">
+            <div class="discovery-card">
+                <div class="discovery-year">1824</div>
+                <h3 class="discovery-title">Megalosaurus</h3>
+                <p class="discovery-location">📍 Stonesfield, Inglaterra</p>
+                <p class="discovery-description">
+                    El primer dinosaurio en ser científicamente descrito y nombrado. William Buckland encontró una mandíbula con dientes que inicialmente pensó pertenecía a un lagarto gigante. Este descubrimiento marcó el inicio de la paleontología de dinosaurios.
+                </p>
+                <div class="discovery-scientist">
+                    <div class="scientist-name">William Buckland</div>
+                    <div class="scientist-info">Geólogo y paleontólogo británico, primer profesor de geología de Oxford</div>
+                </div>
+            </div>
+
+            <div class="discovery-card">
+                <div class="discovery-year">1825</div>
+                <h3 class="discovery-title">Iguanodon</h3>
+                <p class="discovery-location">📍 Sussex, Inglaterra</p>
+                <p class="discovery-description">
+                    Mary Ann Mantell encontró los primeros dientes de Iguanodon. Su esposo Gideon Mantell reconoció la similitud con dientes de iguana moderna, pero de tamaño gigantesco. Este fue el segundo dinosaurio en ser nombrado científicamente.
+                </p>
+                <div class="discovery-scientist">
+                    <div class="scientist-name">Gideon Mantell</div>
+                    <div class="scientist-info">Médico y geólogo británico, pionero en paleontología</div>
+                </div>
+            </div>
+
+            <div class="discovery-card">
+                <div class="discovery-year">1842</div>
+                <h3 class="discovery-title">Acuñación del término "Dinosauria"</h3>
+                <p class="discovery-location">📍 Londres, Inglaterra</p>
+                <p class="discovery-description">
+                    Richard Owen reconoció que Megalosaurus, Iguanodon y Hylaeosaurus formaban un grupo distintivo de reptiles extintos. Creó el término "Dinosauria" que significa "lagartos terribles", estableciendo oficialmente el estudio de los dinosaurios.
+                </p>
+                <div class="discovery-scientist">
+                    <div class="scientist-name">Richard Owen</div>
+                    <div class="scientist-info">Anatomista británico, fundador del Museo de Historia Natural de Londres</div>
+                </div>
+            </div>
+
+            <div class="discovery-card">
+                <div class="discovery-year">1858</div>
+                <h3 class="discovery-title">Hadrosaurus</h3>
+                <p class="discovery-location">📍 Nueva Jersey, Estados Unidos</p>
+                <p class="discovery-description">
+                    El primer esqueleto de dinosaurio relativamente completo encontrado en América del Norte. Joseph Leidy determinó que este dinosaurio caminaba ocasionalmente en dos patas, revolucionando la percepción de cómo se movían los dinosaurios.
+                </p>
+                <div class="discovery-scientist">
+                    <div class="scientist-name">Joseph Leidy</div>
+                    <div class="scientist-info">Paleontólogo estadounidense, padre de la paleontología vertebrada en América</div>
+                </div>
+            </div>
+        </div>
+
+        <section class="timeline-section">
+            <h2 class="section-title">⏳ Línea de Tiempo de Grandes Descubrimientos</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="discovery-title">1877 - Guerra de los Huesos</h3>
+                        <p>Othniel Charles Marsh y Edward Drinker Cope inician una feroz rivalidad que acelera los descubrimientos en el oeste americano, encontrando Allosaurus, Stegosaurus y muchos otros.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="discovery-title">1902 - Tyrannosaurus Rex</h3>
+                        <p>Barnum Brown descubre el primer esqueleto de T. Rex en Montana. Henry Fairfield Osborn lo nombra oficialmente en 1905, convirtiéndose en el dinosaurio más famoso del mundo.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="discovery-title">1922 - Primeros Huevos</h3>
+                        <p>Roy Chapman Andrews encuentra los primeros huevos de dinosaurio conocidos en Mongolia, revolucionando el conocimiento sobre la reproducción de los dinosaurios.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="discovery-title">1964 - Deinonychus</h3>
+                        <p>John Ostrom describe Deinonychus, demostrando que algunos dinosaurios eran activos, ágiles y posiblemente de sangre caliente, iniciando el "Renacimiento de los Dinosaurios".</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3 class="discovery-title">1996 - Dinosaurios con Plumas</h3>
+                        <p>Descubrimiento de Sinosauropteryx en China, el primer dinosaurio no-ave con evidencia clara de plumas, confirmando la conexión entre dinosaurios y aves.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="modern-discoveries">
+            <h2 class="section-title">🚀 Descubrimientos Modernos</h2>
+            
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h4 class="modern-title">Carnotaurus</h4>
+                    <p class="modern-year">1985</p>
+                    <p>Descubierto en Argentina, este "toro carnívoro" tenía cuernos distintivos y brazos extremadamente reducidos.</p>
+                </div>
+
+                <div class="modern-card">
+                    <h4 class="modern-title">Giganotosaurus</h4>
+                    <p class="modern-year">1995</p>
+                    <p>Uno de los carnívoros terrestres más grandes conocidos, rivalizando con T. Rex en tamaño.</p>
+                </div>
+
+                <div class="modern-card">
+                    <h4 class="modern-title">Spinosaurus (redescubierto)</h4>
+                    <p class="modern-year">2014</p>
+                    <p>Nuevos fósiles revelaron que era semi-acuático, el primer dinosaurio nadador conocido.</p>
+                </div>
+
+                <div class="modern-card">
+                    <h4 class="modern-title">Borealopelta</h4>
+                    <p class="modern-year">2017</p>
+                    <p>Ankylosaur preservado de manera extraordinaria, incluyendo color original y contenido estomacal.</p>
+                </div>
+
+                <div class="modern-card">
+                    <h4 class="modern-title">Therizinosaurus (esqueleto completo)</h4>
+                    <p class="modern-year">2022</p>
+                    <p>Finalmente se encontró un esqueleto completo de este gigante herbívoro con garras enormes.</p>
+                </div>
+
+                <div class="modern-card">
+                    <h4 class="modern-title">Meraxes gigas</h4>
+                    <p class="modern-year">2022</p>
+                    <p>Nuevo carcarodontosaurido que ayuda a entender la evolución de los brazos diminutos en grandes terópodos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="fun-facts">
+            <h2 class="section-title"> Descubrimientos</h2>
+            
+            <div class="fact-item">
+                <strong> T. Rex más completo:</strong> "Sue" tiene un 90% de su esqueleto preservado y se vendió por $8.36 millones en 1997.
+            </div>
+
+            <div class="fact-item">
+                <strong> Huevos más grandes:</strong> Los huevos de dinosaurio más grandes encontrados pertenecen a Hypselosaurus y miden hasta 30 cm de largo.
+            </div>
+
+            <div class="fact-item">
+                <strong> Tecnología moderna:</strong> Los escáneres CT y la fluorescencia de rayos X revelan detalles internos sin dañar los fósiles.
+            </div>
+
+            <div class="fact-item">
+                <strong> China, tesoro paleontológico:</strong> Más del 60% de las nuevas especies de dinosaurios se descubren actualmente en China.
+            </div>
+
+            <div class="fact-item">
+                <strong> Colores reales:</strong> Podemos determinar los colores originales de algunos dinosaurios mediante análisis de melanosomas fósiles.
+            </div>
+
+            <div class="fact-item">
+                <strong> Descubrimientos recientes:</strong> Se descubre aproximadamente una nueva especie de dinosaurio cada semana.
+            </div>
+        </section>
+
+        <footer>
+            <p>Los descubrimientos de dinosaurios continúan asombrando al mundo, recordándonos que aún hay mucho por descubrir sobre nuestro planeta prehistórico. Cada fósil encontrado es una ventana al pasado que nos ayuda a entender mejor la increíble diversidad de la vida en la Tierra.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.discovery-card, .modern-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease-out';
+                observer.observe(card);
+            });
+
+            const discoveryCards = document.querySelectorAll('.discovery-card');
+            discoveryCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 25px 50px rgba(255, 107, 53, 0.4), 0 0 50px rgba(255, 210, 63, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '0 25px 50px rgba(255, 107, 53, 0.3)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
